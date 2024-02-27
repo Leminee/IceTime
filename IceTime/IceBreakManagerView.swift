@@ -9,6 +9,7 @@
 import SwiftUI
 import CoreImage.CIFilterBuiltins
 import AVFoundation
+import UserNotifications
 
 struct IceBreakManagerView: View {
     @State private var selectedHour: Int = Calendar.current.component(.hour, from: Date())
@@ -20,6 +21,7 @@ struct IceBreakManagerView: View {
     @State private var timer: Timer?
     @State private var isScanning = false
     @State private var scannedIceBreakTimes: [String] = []
+    @State private var isQRCodeFullScreen = false
 
     var body: some View {
         VStack {
@@ -32,7 +34,7 @@ struct IceBreakManagerView: View {
                 .pickerStyle(.wheel)
                 .frame(width: 100)
                 .background(Color(.systemBackground))
-
+                
                 Picker("Minute", selection: $selectedMinute) {
                     ForEach(0..<60, id: \.self) { minute in
                         Text("\(minute)")
@@ -43,7 +45,7 @@ struct IceBreakManagerView: View {
                 .background(Color(.systemBackground))
             }
             .padding()
-
+            
             Button(action: {
                 let formattedTime = String(format: "%02d:%02d", selectedHour, selectedMinute)
                 iceBreakTimes.append(formattedTime)
@@ -56,7 +58,7 @@ struct IceBreakManagerView: View {
                     .foregroundColor(.white)
                     .cornerRadius(8)
             }
-
+            
             Button(action: {
                 print("QR-Code generieren")
                 if iceBreakTimes.count >= 3 {
@@ -75,7 +77,7 @@ struct IceBreakManagerView: View {
                     .cornerRadius(8)
             }
             .padding()
-
+            
             Button(action: {
                 isScanning.toggle()
             }) {
@@ -86,22 +88,39 @@ struct IceBreakManagerView: View {
                     .cornerRadius(8)
             }
             .padding()
-
+            
             if showErrorMessage {
                 Text("Es müssen mindestens drei Eispausen eingetragen sein, damit ein QR-Code generiert werden kann.")
                     .foregroundColor(.red)
                     .padding()
                     .background(Color(.systemBackground))
             }
-
+            
+            
             if let qrCodeImage = qrCodeImage {
                 Image(uiImage: qrCodeImage)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 200, height: 200)
+                    .frame(width: 50, height: 50)
                     .padding()
+                    .onTapGesture {
+                        isQRCodeFullScreen.toggle()
+                    }
+                    .fullScreenCover(isPresented: $isQRCodeFullScreen) {
+                        // Hier wird die Modalsicht für den vergrößerten QR-Code angezeigt
+                        ZStack {
+                            Color.black.edgesIgnoringSafeArea(.all)
+                            Image(uiImage: qrCodeImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .padding()
+                                .onTapGesture {
+                                    isQRCodeFullScreen.toggle()
+                                }
+                        }
+                    }
             }
-
+        
             List(iceBreakTimes.indices, id: \.self) { index in
                 Text("Pause \(index + 1): \(iceBreakTimes[index])")
                     .foregroundColor(Color(.label))
@@ -143,6 +162,32 @@ struct IceBreakManagerView: View {
         audioPlayer?.stop()
         timer?.invalidate()
     }
+    
+ 
+
+ 
+    private func scheduleIceBreakNotifications() {
+        print("test")
+           for iceBreakTime in scannedIceBreakTimes {
+               let dateFormatter = DateFormatter()
+               dateFormatter.dateFormat = "HH:mm"
+
+               guard let iceBreakDate = dateFormatter.date(from: iceBreakTime) else {
+                   continue
+               }
+
+               let components = Calendar.current.dateComponents([.hour, .minute], from: iceBreakDate)
+               let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+
+               let content = UNMutableNotificationContent()
+               content.title = "Eispause"
+               content.body = "Es ist Zeit für eine Eispause!"
+
+               let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+               UNUserNotificationCenter.current().add(request)
+           }
+       }
+
 
     private func scheduleIceBreakSound() {
            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
@@ -281,6 +326,7 @@ extension IceBreakManagerView {
         }
     }
 }
+
 
 struct IceBreakManagerView_Previews: PreviewProvider {
     static var previews: some View {
