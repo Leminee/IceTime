@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		672253082B8D6E3000B08AEB /* break_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 672253072B8D6E3000B08AEB /* break_sound.mp3 */; };
 		67A44CB52B8D6904009CA065 /* IceTimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A44CB42B8D6904009CA065 /* IceTimeApp.swift */; };
 		67A44CB72B8D6904009CA065 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67A44CB62B8D6904009CA065 /* ContentView.swift */; };
 		67A44CB92B8D6905009CA065 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67A44CB82B8D6905009CA065 /* Assets.xcassets */; };
@@ -35,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		672253072B8D6E3000B08AEB /* break_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = break_sound.mp3; path = ../../../../Downloads/break_sound.mp3; sourceTree = "<group>"; };
+		672253092B8D729100B08AEB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		67A44CB12B8D6904009CA065 /* IceTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IceTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67A44CB42B8D6904009CA065 /* IceTimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IceTimeApp.swift; sourceTree = "<group>"; };
 		67A44CB62B8D6904009CA065 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -96,6 +99,8 @@
 		67A44CB32B8D6904009CA065 /* IceTime */ = {
 			isa = PBXGroup;
 			children = (
+				672253092B8D729100B08AEB /* Info.plist */,
+				672253072B8D6E3000B08AEB /* break_sound.mp3 */,
 				67A44CB42B8D6904009CA065 /* IceTimeApp.swift */,
 				67A44CB62B8D6904009CA065 /* ContentView.swift */,
 				67A44CB82B8D6905009CA065 /* Assets.xcassets */,
@@ -234,6 +239,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				672253082B8D6E3000B08AEB /* break_sound.mp3 in Resources */,
 				67A44CBC2B8D6905009CA065 /* Preview Assets.xcassets in Resources */,
 				67A44CB92B8D6905009CA065 /* Assets.xcassets in Resources */,
 			);
@@ -429,6 +435,7 @@
 				DEVELOPMENT_TEAM = 46G2D29VH8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = IceTime/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -458,6 +465,7 @@
 				DEVELOPMENT_TEAM = 46G2D29VH8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = IceTime/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
